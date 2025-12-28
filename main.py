@@ -198,8 +198,8 @@ def check_rapid_usd_move_multi(now: float, price: float) -> tuple[str, float, fl
 
     msg = (
         f"{emoji} Rapid {direction} detected\n"
-        f"{TOKEN_NAME}/USDT: {'+' if delta > 0 else '-'}${abs_delta:.2f} in {elapsed}s\n"
         f"From {old_price:.4f} → {price:.4f}\n"
+        f"{'+' if delta > 0 else '-'}${abs_delta:.2f} in {elapsed}s\n"
         f"Time: {fmt_ts(now)} ({TIMEZONE_ENV})"
     )
     return msg, delta, elapsed
@@ -240,7 +240,6 @@ def main():
         in_range = (MIN_P <= price <= MAX_P)
         if in_range and (now - last_range_alert_ts) >= RANGE_COOLDOWN_SECONDS:
             msg = (
-                f"🚨 {TOKEN_NAME}/USDT in range {MIN_P}-{MAX_P}\n"
                 f"Price: {price:.4f}\n"
                 f"Time: {ts_str} ({TIMEZONE_ENV})\n"
                 f"Source: {src}"
