@@ -11,6 +11,8 @@ load_dotenv()
 MIN_P = float(os.getenv("MIN_P", "220"))
 MAX_P = float(os.getenv("MAX_P", "230"))
 POLL_SECONDS = int(os.getenv("POLL_SECONDS", "15"))
+TOP_THRESHOLD = float(os.getenv("TOP_THRESHOLD", "230"))
+BOTTOM_THREHSOLD = float(os.getenv("BOTTOM_THRESHOLD", "220"))
 
 # Cooldowns (seconds)
 RANGE_COOLDOWN_SECONDS = int(os.getenv("RANGE_COOLDOWN_SECONDS", "300"))
@@ -244,7 +246,13 @@ def main():
                 f"Time: {ts_str} ({TIMEZONE_ENV})\n"
                 f"Source: {src}"
             )
-            notify(msg, also_telegram=True)
+            if price >= TOP_THRESHOLD:
+                notify(msg, also_telegram=True)
+            elif price <= BOTTOM_THREHSOLD:
+                notify(msg, also_telegram=True)
+            else:
+                pass
+            # notify(msg, also_telegram=True)
             last_range_alert_ts = now
 
         # 2) Rapid move alert (multi-lag)
